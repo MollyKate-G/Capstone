@@ -1,1 +1,9 @@
 # Capstone
+
+After downloading all of the files. 
+Run python create_sql.py 
+Run python cap_main.py 
+    currently all user passwords = '1234'
+    to log in as a manager use the email mkg@gmail.com
+    to log in as a student use the email mark@gmail.com
+    Read through and select the options you would like to see/change
