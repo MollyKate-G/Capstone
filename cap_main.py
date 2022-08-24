@@ -51,7 +51,6 @@ def edit_user_info():
 
         elif choice.upper() == 'B':
             first_last_name_print()
-            # hashed_password() 
             replacement_var = 'password'
             var_name_change = 'password'
             user_update_sql(var_name_change,replacement_var)
@@ -86,28 +85,6 @@ def edit_user_info():
         else:
             print('Invalid Selection')
 
-def password_check(email, password):
-    try:
-        email = email
-        check_value = cursor.execute("SELECT password FROM Users WHERE email=?", (email,)).fetchone()
-        if check_value[0] == bcrypt.hashpw(password.encode('utf-8'), check_value[0]):
-            return True
-    except:
-        return False
-    
-def hashed_password(user_id, password):
-    data = cursor.execute("SELECT * From Users")
-    # email = input("Enter your email: ")
-    # password = input("Enter enter a password: ")
-    hashed_password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-    # print(hashed_password)
-    update_active = '''UPDATE Users SET password = ? WHERE user_id = ?'''
-    update_values = (hashed_password, user_id)
-    cursor.execute(update_active, update_values)
-    connection.commit()
-    print('Success!')
-# hashed_password() 
-
 def assessment_changes():
     print('Update Assessment')
     rows = cursor.execute('''SELECT assessment_id, due_date, creation_date, competency_id FROM Assessments''').fetchall()
@@ -118,7 +95,7 @@ def assessment_changes():
     due_date = input("Enter the updated due date: ")
     competency_id = input("Enter a competency ID: ")
     update_active = (f"UPDATE Assessments SET due_date = ? WHERE assessment_id = ? and competency_id = ?")
-    update_values = (assessment_id,due_date,competency_id)
+    update_values = (due_date,assessment_id,competency_id)
     cursor.execute(update_active, update_values)
     connection.commit()
     print('Success!')
@@ -146,6 +123,8 @@ def user_update_sql(var_name_change, replacement_var):
     else:
         print(f'Your current {var_name_change} is: {person_info[2]}')
     new_values = input(f"Enter your updated {var_name_change}: ")
+    if var_name_change == 'password':
+        new_values = bcrypt.hashpw(new_values.encode("utf-8"), bcrypt.gensalt())
     update_active = (f"UPDATE Users SET {replacement_var} = ? WHERE user_id = ?")
     update_values = (new_values,user_input)
     cursor.execute(update_active, update_values)
@@ -182,7 +161,7 @@ def main_menu():
         if choice == '1':
             edit_user_info()
 
-        elif choice == '2' and user_type == ['student']:
+        elif choice == '2' or '3' and user_type == ['student']:
             managers_only_print()
 
         elif choice == '2' and user_type == ['manager']:

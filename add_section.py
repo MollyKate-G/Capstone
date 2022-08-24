@@ -112,18 +112,20 @@ def add_info():
         if choice.upper() == 'A':
             add_user()
 
-        if choice.upper() == 'B':
+        elif choice.upper() == 'B':
             add_competency()
 
-        if choice.upper() == 'C':
+        elif choice.upper() == 'C':
             assessment_to_competency()
 
-        if choice.upper() == 'D':
+        elif choice.upper() == 'D':
             add_assessment_results()
 
-        if choice.upper() == 'E':
+        elif choice.upper() == 'E':
             delete_data()
 
-        if choice.upper() == 'F':
+        elif choice.upper() == 'F':
             break
+        else:
+            print('Invalid Input')
 # add_info()

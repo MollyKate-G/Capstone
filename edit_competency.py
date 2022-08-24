@@ -34,7 +34,8 @@ def assessment_preview(user_type):
             has_results = True
             print(f'{row[0]!s:<13}{row[1]!s:<11}{row[2]!s:<17}{row[3]!s:<8}{row[4]!s:<23}{row[5]!s:<14}{row[6]!s}')
     elif user_type == ['student']:
-        # user_id = login_user(email, password)
+        check_login = False
+        user_id = login_user(email, password, check_login)
         rows = cursor.execute('''SELECT result_id, user_id, assessment_id, score, assessment_date, manager_id, score_notes 
                                  FROM Assessment_Results WHERE user_id = ?''', (user_id,)).fetchall()
         if rows:
@@ -89,7 +90,7 @@ def edit_assessment():
                 the_column = 'score'  
                 if the_edit == '0':
                     score_notes = 'No competency'
-                if the_edit == '1':
+                elif the_edit == '1':
                     score_notes = 'Basic Competency'
                 elif the_edit == '2':
                     score_notes = 'Intermediate Competency'
@@ -97,6 +98,8 @@ def edit_assessment():
                     score_notes = 'Advanced Competency'
                 elif the_edit == '4':
                     score_notes = 'Expert Competency'
+                else:
+                    print('Invalid Input')
                 result_id = assessment_edits(the_edit,the_column)
                 update_active = f"UPDATE Assessment_Results SET score_notes = ? WHERE result_id = ?;"
                 update_values = (score_notes, result_id)

@@ -3,34 +3,27 @@ import sqlite3
 connection = sqlite3.connect('capstone.db')
 cursor = connection.cursor()
 
+# manager
 # email = 'mkg@gmail.com'
 # password = '1234'
 
-# email = 'lily@gmail.com'
+# student
+# email = 'mark@gmail.com'
 # password = '1234'
+
 email = input("Enter your email: ")
 password = input("Enter your password: ")
 
-def password_check(email, password):
-  try:
-    password = bcrypt.hashpw(password.encode('utf-8'), check_value[0])
-    check_value = cursor.execute("SELECT password FROM Users WHERE email = ?", (email,)).fetchone()
-    password == check_value[0]
-    print(True)
-  except:
-    print(False)
-
-password_check(email, password)
 user_type = []
+check_login = True
 
-def login_user():
-  row = cursor.execute("""SELECT user_id, email, password, user_type FROM Users WHERE email = ? 
-                          AND password = ?""", (email, password,)).fetchone()
-  user_type.append(row[3])
+def login_user(email, password, check_login):
+  row = cursor.execute('SELECT user_id, user_type FROM Users WHERE email = ?', (email,)).fetchone()
+  user_type.append(row[1])
   user_id = row[0]
-  # if email and password == None:
-
-  print(f'''
+  
+  if check_login == True:
+    print(f'''
   .--..--..--..--..--..--..--..--..--..--..--..--..--..--..--..--.
 / .. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \.. \\
 \ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/\ \/ /
@@ -56,7 +49,7 @@ def login_user():
 \ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `'\ `' /
  `--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'`--'
  ''')
-
+  else:
+    pass
   return user_id
-# login_user()
-
+login_user(email, password, check_login)

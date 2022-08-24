@@ -24,7 +24,7 @@ def create_data():
 data = ['ID','First Name','Last Name','Score', 'Competency Name','Score Notes', 'Assessment_id', 'Due Date']
 def person_data():
     with open('comp_individual.csv', 'w', newline='') as outfile:
-        user_input = input('Enter a User ID: ')
+        user_input = input('Enter the User ID again to write it to a csv file: ')
         competencies = cursor.execute(f'''
     Select Users.user_id, Users.first_name, Users.last_name, Assessment_Results.score, 
     Competencies.competency_name, Assessment_Results.score_notes, Assessments.assessment_id, Assessments.due_date

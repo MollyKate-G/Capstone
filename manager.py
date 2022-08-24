@@ -11,7 +11,7 @@ def view_all_users():
     rows = cursor.execute('''SELECT * FROM Users''').fetchall()
     print(f'\n{"ID  First Name  Last Name        Phone       Email                  Password      A.   Date Created          Hire Date             User Type"}\n')
     for row in rows:  
-        print(f'{row[0]!s:<4}{row[1]!s:<12}{row[2]!s:<17}{row[3]!s:<12}{row[4]!s:<23}{row[5]!s:<14}{row[6]!s:<5}{row[7]!s:<22}{row[8]!s:<22}{row[9]!s:<14}')
+        print(f'{row[0]!s:<4}{row[1]!s:<12}{row[2]!s:<17}{row[3]!s:<12}{row[4]!s:<23}{row[5][2:10:]!s:<14}{row[6]!s:<5}{row[7]!s:<22}{row[8]!s:<22}{row[9]!s:<14}')
 # # view_all_users()
 
 def view_search():
@@ -26,7 +26,7 @@ First Name: {row[1]}
 Last Name: {row[2]}       
 Phone: {row[3]}      
 Email: {row[4]}                
-Password: {row[5]}   
+Password: {row[5][2:10:]}   
 Active:{row[6]}   
 Date Created: {row[7]}         
 Hire Date: {row[8]}            
@@ -34,6 +34,7 @@ User Type: {row[9]}\n''')
 
     if has_results == False:
         print(f"\nNo user with the last name {name_search} was not found in the database.")
+
 # view_search()
 
 def sql_join(sql_finished,checkpoint):
